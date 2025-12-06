@@ -33,6 +33,19 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
+.mobile-menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
 .container {
   margin: 0 auto;
   display: grid;
@@ -40,7 +53,7 @@ body {
   gap: 1.5rem;
 }
 
-/* Sidebar */
+/* Mobile: hide sidebar by default */
 .sidebar {
   background: white;
   border-radius: var(--border-radius);
@@ -51,6 +64,66 @@ body {
   max-width: 800px;
 }
 
+/* Mobile styles */
+@media (max-width: 1024px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 90%;
+    max-width: 320px;
+    height: 100vh;
+    z-index: 999;
+    transition: left 0.3s ease;
+    padding: 1.25rem;
+  }
+
+  .sidebar.sidebar-open {
+    left: 0;
+  }
+
+  .preview-container {
+    margin-top: 60px;
+  }
+
+  .resume-preview {
+    width: 100%;
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  .resume-body {
+    grid-template-columns: 1fr;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .contact-info {
+    text-align: left;
+  }
+}
+
+/* Sidebar styles (desktop) */
+@media (min-width: 1025px) {
+  .mobile-menu-toggle {
+    display: none;
+  }
+}
+
+/* Existing styles */
 .header-row {
   display: flex;
   align-items: center;
@@ -101,7 +174,8 @@ body {
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 10px;
+  margin-top: 15px;
 }
 
 .grid-2 {
@@ -170,7 +244,8 @@ body {
 
 .section-header {
   display: flex;
-  align-items: center; justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .add-btn {
@@ -243,7 +318,6 @@ body {
   cursor: pointer;
 }
 
-/* Preview */
 .preview-container {
   display: flex;
   flex-direction: column;
@@ -281,6 +355,8 @@ body {
   padding: 1.5rem;
   display: flex;
   justify-content: center;
+  max-height: calc(100vh - 190px);
+  overflow-y: auto;
 }
 
 .resume-preview {
@@ -290,6 +366,7 @@ body {
   padding: 2rem;
   box-shadow: var(--shadow-sm);
   border-radius: 0.5rem;
+  max-height: calc(100vh - 190px);
 }
 
 .resume-header {
@@ -406,7 +483,6 @@ body {
   color: var(--gray-500);
 }
 
-/* Scrollbar for webkit */
 .experience-list::-webkit-scrollbar,
 .education-list::-webkit-scrollbar {
   width: 6px;

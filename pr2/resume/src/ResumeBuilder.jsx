@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Plus, Trash2, Download, PaintBucket, FileText } from 'lucide-react';
+import { Plus, Trash2, Download, PaintBucket, FileText, Menu, X } from 'lucide-react';
 
 function rgbStringToHex(rgbString) {
   const m = rgbString.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i);
@@ -78,6 +78,8 @@ export default function ResumeBuilder() {
   const [primaryColor, setPrimaryColor] = useState('#0ea5a4');
   const [safePrimaryColor, setSafePrimaryColor] = useState(resolveColorToHex('#0ea5a4'));
   const [fontFamily, setFontFamily] = useState('Inter, ui-sans-serif, system-ui');
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const hex = resolveColorToHex(primaryColor, '#0ea5a4');
@@ -182,9 +184,18 @@ export default function ResumeBuilder() {
 
   return (
     <div className="resume-builder" style={{ fontFamily }}>
+      {/* Mobile toggle button */}
+      <button
+        className="mobile-menu-toggle"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        aria-label="Открыть/закрыть меню"
+      >
+        {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+
       <div className="container">
         {/* Sidebar */}
-        <aside className="sidebar">
+        <aside className={`sidebar ${isSidebarOpen ? 'sidebar-open' : ''}`}>
           <div className="header-row">
             <h2 className="title">Конструктор резюме</h2>
             <div className="button-group">
